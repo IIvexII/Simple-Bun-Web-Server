@@ -1,15 +1,30 @@
-# bun-test
+# Bun Server
 
-To install dependencies:
+## Install
+* Install Bun and thats it.
 
+## Run
 ```bash
-bun install
+bun run ./src/index.ts
 ```
 
-To run:
+## Example
+```typescript
+import { server ,ConfigRoutes } from "./WebServer";
 
-```bash
-bun run index.ts
+const app = new ConfigRoutes();
+
+app.get('/', () => {
+    return 'Hello This is home page';
+})
+
+app.get('/users', () => {
+    return 'All users will show here.';
+})
+
+app.get('/foo', () => {
+    return 'Foo';
+})
+// Pass port and the instance of ConfigureRoutes
+server(1234, app);
 ```
-
-This project was created using `bun init` in bun v0.1.7. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
