@@ -6,7 +6,7 @@
     "moduleResolution": "node",
 
     // so that if your project isn't using TypeScript, it still has autocomplete
-    "allowJs": false,
+    "allowJs": true,
 
     // "bun-types" is the important part
     "types": ["bun-types"]

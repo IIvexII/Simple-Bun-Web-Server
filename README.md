@@ -1,4 +1,4 @@
-# Test Bun
+# bun-test
 
 To install dependencies:
 
