@@ -1,4 +1,4 @@
-# first-project
+# Test Bun
 
 To install dependencies:
 

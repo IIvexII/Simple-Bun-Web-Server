@@ -1,5 +1,5 @@
 {
-  "name": "first-project",
+  "name": "test-bun",
   "module": "src/index.ts",
   "type": "module",
   "devDependencies": {
