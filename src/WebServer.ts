@@ -1,7 +1,7 @@
 import { callbackify } from "util";
 
 // Basic web server with routes based on Bun.
-type CallBack = () => Response;
+type CallBack = () => string;
 
 interface RouteInterface {
     [method:string]: 
@@ -14,7 +14,7 @@ interface RouteInterface {
 }
 export class ConfigRoutes {
     // All registered routes will be stored here.
-    private routes: RouteInterface = {'GET': [], 'POST': []};
+    public routes: RouteInterface = {'GET': [], 'POST': []};
     private baseUrl: string;
 
     setUrl(url:string){
@@ -29,21 +29,21 @@ export class ConfigRoutes {
     }
 
     // Trigger call back on route given
-    public triggerRoute(method: string, url:string):Response {
+    public triggerRoute(method: string, url:string):string {
         // Extracting route from url
         let route = url.replace(this.baseUrl, '');
         route = '/' + route;
-
-        console.log(route);
+        
         if (method in this.routes)
         {
-            this.routes[method].forEach((value) => {
+            for(let value of this.routes[method])
+            {
                 if (value.route == route){
                     return value.callback();
                 }
-            });
+            };
         } else {
-            return new Response('404');
+            return '404';
         }
     }
     // push route in our routes object.
@@ -53,17 +53,18 @@ export class ConfigRoutes {
         }
     }
 }
- export const server = (port:number, configRoutes:ConfigRoutes) => {
+ export function server (port:number, configRoutes:ConfigRoutes) {
+     
      Bun.serve({
          fetch(req: Request) {
             // log message of serving at url.
-            console.log(`Serving at: ${this.hostname}`)
 
             // Setting up the base url for Config class.
             configRoutes.setUrl(this.hostname);
+             const message = configRoutes.triggerRoute(req.method, req.url);
 
             // Trigger the route
-            return configRoutes.triggerRoute(req.method, req.url);
+            return new Response(message);
         },
         port:port
     });
