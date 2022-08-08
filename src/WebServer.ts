@@ -54,11 +54,9 @@ export class ConfigRoutes {
     }
 }
  export function server (port:number, configRoutes:ConfigRoutes) {
-     
+     console.log(`Serving on: http://localhost:${port}`)
      Bun.serve({
          fetch(req: Request) {
-            // log message of serving at url.
-
             // Setting up the base url for Config class.
             configRoutes.setUrl(this.hostname);
              const message = configRoutes.triggerRoute(req.method, req.url);
